@@ -1,0 +1,118 @@
+{% import "bootstrap/wtf.html" as wtf  %}
+<!doctype html>
+<html lang="fr">
+{% block head %}
+<head>
+    <meta charset="utf-8">
+    <!-- Mise à l'echelle pour les navigateurs mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS de Bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+
+
+{% endblock %}
+
+{% block body %}
+    <!-- Votre contenu -->
+
+    <!-- Fichiers Javascript nécessaires pour certains composants Bootstrap -->
+    {% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-g8t6H3dVg2FgYMAmz4j3zc2zwnj9Q2MWmzzM2X+bLpLjew5oVfUVz2Xvxbstnc1G" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha384-ugIgF4l4Fdo3F0+tx0gD5U1YSxKv4h4NpGrtpUvZ1kFy0VygKu2gss1SwC4gMUC1" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+        var element = document.getElementById("myToast");
+        // Create toast instance
+        var myToast = new bootstrap.Toast(element);
+
+        myToast.show();
+        });
+    </script>
+    {% endblock %}
+
+<body>
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='img/IMTrello.jpeg') }}" alt="" width="50" height="50" class="me-2 flex-shrink-0 img-thumbnail">
+                <span class="h6 mb-0">IMTrello</span>
+            </div>
+        </a>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                {% if current_user.is_authenticated %}
+
+                {% if current_user.role_id==2 %}
+                    <li class="nav-item ">
+                      <a class="nav-link " href="{{ url_for('main.manager',user_name=current_user.username) }}"  role="button"  aria-expanded="false">
+                        Workspace
+                      </a>
+                    </li>
+                    <li >
+                      <a class="btn btn-primary" href="{{ url_for('main.create_project',user_name=current_user.username) }}" role="button">Create</a>
+                    </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Account <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a href="{{ url_for('authentication.logout_page') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('authentication.login_page') }}">Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11">
+    {% for message in get_flashed_messages() %}
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="myToast" data-bs-autohide="true">
+        <div class="toast-header">
+          <img src="{{ url_for('static', filename='img/IMTrello.jpeg') }}" alt="" width="20" height="20" class="me-2 flex-shrink-0 ">
+          <strong class="me-auto">IMTrello</strong>
+            <small>Just Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+              {{ message }}
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    {% block page_content %}{% endblock %}
+</div>
+</body>
+{% endblock %}
+
+</html>
+
+

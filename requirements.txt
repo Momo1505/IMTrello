@@ -1,0 +1,11 @@
+click @ file:///croot/click_1698129812380/work
+Flask @ file:///croot/flask_1702980023242/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///croot/jinja2_1706733616596/work
+MarkupSafe @ file:///croot/markupsafe_1704205993651/work
+Werkzeug @ file:///croot/werkzeug_1706210078083/work
+Flask-Bootstrap==3.3.5.7
+flask~=2.2.5
+werkzeug~=2.3.8
+wtforms~=2.3.3
+flask_login

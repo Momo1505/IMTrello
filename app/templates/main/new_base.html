@@ -1,0 +1,51 @@
+ {% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+    <div class="container">
+       <div class="row">
+          <div class="col-sm-6">
+            <div class="card shadow" >
+                <h5 class="card-header text-center">Tasks Tracking</h5>
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <div class="card shadow">
+                              <div class="card-body"><h6>Total</h6><p class="text-center">{{ total_tasks }}</p></div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                          <div class="card shadow">
+                              <div class="card-body"><h6>Uncompleted</h6><p class="text-center">{{ total_tasks_uncompleted }}</p></div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                          <div class="card shadow">
+                              <div class="card-body"><h6>Completed</h6><p class="text-center">{{ total_tasks_completed }}</p></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+               {% block task_form %}{% endblock %}
+                {% block filter %}{% endblock %}
+           </div>
+       </div>
+        {% block name %}{% endblock %}
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <h4 class="display-4">{{ project_name }}</h4>
+                </div>
+                <div class="col-auto">
+                    {% if current_user.role_id==2 %}
+                    <a class="btn btn-danger btn-sm" href="{{ url_for('main.delete_project', project_name=project_name) }}">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% block tasks %}
+        {% endblock %}
+    </div>
+{% endblock %}

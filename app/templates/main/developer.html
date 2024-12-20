@@ -1,0 +1,44 @@
+{% extends 'main/new_base.html' %}
+
+{% block filter %}
+<p>
+   <button class="btn btn-outline-primary btn-lg " type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Show Filter
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+   <div class="card shadow">
+      <div class="card-header text-center">Filter</div>
+      <div class="card-body">
+          {{ wtf.quick_form(filter_form) }}
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block name %}
+<h5 class="display-5">{{ current_user.username }}'s tasks</h5>
+{% endblock %}
+
+{% block tasks %}
+    {% if filter==True %}
+        {% for task in template_tasks %}
+            {% if task.completed==True %}
+            {% include "main/card_template.html" %}
+            {% endif %}
+        {% endfor %}
+    {% elif filter %}
+        {% for task in template_tasks %}
+            {% if task.priority==filter %}
+            {% include "main/card_template.html" %}
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+        {% for task in template_tasks %}
+            {% include "main/card_template.html" %}
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}

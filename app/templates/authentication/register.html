@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}IMTrello - Register{% endblock %}
+
+{% block page_content %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <h5 class="card-header text-center">Register</h5><br>
+                <div class="card-body">
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
